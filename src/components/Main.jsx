@@ -18,19 +18,23 @@ export default function Main() {
   }
 
   useEffect(() => {
-    if (search.length > 2) {
+    async function fetchData() {
+      if (search.length <= 2) return;
       setLoading(true);
-      fetch(`http://www.omdbapi.com/?apikey=${api_key}&s=${search}`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.Search) {
-            setMovies(data.Search);
-          } else {
-            setMovies([]);
-          }
-          setLoading(false);
-        });
+      const res = await fetch(
+        `http://www.omdbapi.com/?apikey=${api_key}&s=${search}`
+      );
+      const data = await res.json();
+
+      if (data.Search) {
+        setMovies(data.Search);
+      } else {
+        setMovies([]);
+      }
+      setLoading(false);
     }
+
+    fetchData();
   }, [search]);
 
   return (
