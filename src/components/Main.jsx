@@ -5,13 +5,14 @@ import "slick-carousel/slick/slick-theme.css";
 import Input from "./Input";
 import loadingGif from "../assets/loading.gif";
 import sliderSetting from "../utils/sliderSettings.js";
+import { fetchFilmData } from "../https.js";
+import Error from "./Error.jsx";
 
 export default function Main() {
   const [movies, setMovies] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const api_key = import.meta.env.VITE_API_KEY;
+  const [error, setError] = useState(null);
 
   function handleSearch(event) {
     setSearch(event.target.value);
@@ -20,22 +21,32 @@ export default function Main() {
   useEffect(() => {
     async function fetchData() {
       if (search.length <= 2) return;
-      setLoading(true);
-      const res = await fetch(
-        `http://www.omdbapi.com/?apikey=${api_key}&s=${search}`
-      );
-      const data = await res.json();
 
-      if (data.Search) {
-        setMovies(data.Search);
-      } else {
-        setMovies([]);
+      try {
+        setLoading(true);
+
+        const data = await fetchFilmData(search);
+
+        if (data.Search) {
+          setMovies(data.Search);
+        } else {
+          setMovies([]);
+        }
+      } catch (error) {
+        setError({
+          message: error.message || "An error occurred, please come back later",
+        });
       }
+
       setLoading(false);
     }
 
     fetchData();
   }, [search]);
+
+  if (error) {
+    return <Error message={error.message} />;
+  }
 
   return (
     <>
