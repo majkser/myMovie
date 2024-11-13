@@ -63,7 +63,7 @@ export default function Main() {
         <Input search={search} handleSearch={handleSearch} />
         {loading ? (
           <img className="mx-auto my-12" src={loadingGif} alt="loading" />
-        ) : search.length > 2 ? (
+        ) : debounceSearch.length > 2 ? (
           movies.length > 0 ? (
             <Slider className="w-[85%] mx-auto my-12" {...sliderSetting}>
               {movies.length > 0 &&
