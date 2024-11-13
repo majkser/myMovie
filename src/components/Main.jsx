@@ -13,19 +13,28 @@ export default function Main() {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [debounceSearch, setDebounceSearch] = useState(search);
 
   function handleSearch(event) {
     setSearch(event.target.value);
   }
 
   useEffect(() => {
+    const timeoutHandler = setTimeout(() => {
+      setDebounceSearch(search);
+    }, 500);
+
+    return () => clearTimeout(timeoutHandler);
+  });
+
+  useEffect(() => {
     async function fetchData() {
-      if (search.length <= 2) return;
+      if (debounceSearch.length <= 2) return;
 
       try {
         setLoading(true);
 
-        const data = await fetchFilmData(search);
+        const data = await fetchFilmData(debounceSearch);
 
         if (data.Search) {
           setMovies(data.Search);
@@ -42,7 +51,7 @@ export default function Main() {
     }
 
     fetchData();
-  }, [search]);
+  }, [debounceSearch]);
 
   if (error) {
     return <Error message={error.message} />;
