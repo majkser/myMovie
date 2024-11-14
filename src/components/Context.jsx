@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import { fetchFilmData } from "../https.js";
 
 export const Context = createContext({
   movies: [],
@@ -19,6 +20,28 @@ export default function ContextProvider({ children }) {
     setSearch(event.target.value);
   }
 
+  async function fetchData() {
+    if (debounceSearch.length <= 2) return;
+
+    try {
+      setLoading(true);
+
+      const data = await fetchFilmData(debounceSearch);
+
+      if (data.Search) {
+        setMovies(data.Search);
+      } else {
+        setMovies([]);
+      }
+    } catch (error) {
+      setError({
+        message: error.message || "An error occurred, please come back later",
+      });
+    }
+
+    setLoading(false);
+  }
+
   return (
     <Context.Provider
       value={{
@@ -33,6 +56,7 @@ export default function ContextProvider({ children }) {
         setLoading,
         setError,
         setDebounceSearch,
+        fetchData,
       }}
     >
       {children}

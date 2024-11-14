@@ -1,7 +1,7 @@
 import "./App.css";
 import ContextProvider from "./components/Context.jsx";
-import Header from "./components/Header";
-import Main from "./components/Main";
+import Header from "./components/header.jsx";
+import Main from "./components/Main.jsx";
 
 function App() {
   return (

@@ -6,20 +6,17 @@ import "slick-carousel/slick/slick-theme.css";
 import Input from "./Input";
 import loadingGif from "../assets/loading.gif";
 import sliderSetting from "../utils/sliderSettings.js";
-import { fetchFilmData } from "../https.js";
 import Error from "./Error.jsx";
 
 export default function Main() {
   const {
     movies,
-    setMovies,
     search,
     loading,
-    setLoading,
     error,
-    setError,
     debounceSearch,
     setDebounceSearch,
+    fetchData,
   } = useContext(Context);
 
   useEffect(() => {
@@ -31,28 +28,6 @@ export default function Main() {
   });
 
   useEffect(() => {
-    async function fetchData() {
-      if (debounceSearch.length <= 2) return;
-
-      try {
-        setLoading(true);
-
-        const data = await fetchFilmData(debounceSearch);
-
-        if (data.Search) {
-          setMovies(data.Search);
-        } else {
-          setMovies([]);
-        }
-      } catch (error) {
-        setError({
-          message: error.message || "An error occurred, please come back later",
-        });
-      }
-
-      setLoading(false);
-    }
-
     fetchData();
   }, [debounceSearch]);
 
