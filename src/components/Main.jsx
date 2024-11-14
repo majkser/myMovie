@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { Context } from "./Context";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -9,15 +10,17 @@ import { fetchFilmData } from "../https.js";
 import Error from "./Error.jsx";
 
 export default function Main() {
-  const [movies, setMovies] = useState([]);
-  const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [debounceSearch, setDebounceSearch] = useState(search);
-
-  function handleSearch(event) {
-    setSearch(event.target.value);
-  }
+  const {
+    movies,
+    setMovies,
+    search,
+    loading,
+    setLoading,
+    error,
+    setError,
+    debounceSearch,
+    setDebounceSearch,
+  } = useContext(Context);
 
   useEffect(() => {
     const timeoutHandler = setTimeout(() => {
@@ -60,7 +63,7 @@ export default function Main() {
   return (
     <>
       <main className="bg-[#1A1A2E]">
-        <Input search={search} handleSearch={handleSearch} />
+        <Input />
         {loading ? (
           <img className="mx-auto my-12" src={loadingGif} alt="loading" />
         ) : debounceSearch.length > 2 ? (

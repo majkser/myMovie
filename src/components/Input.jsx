@@ -1,6 +1,9 @@
-import { useEffect } from "react";
+import { useContext } from "react";
+import { Context } from "./Context";
 
-export default function Input({ search, handleSearch }) {
+export default function Input() {
+  const { search, handleSearch } = useContext(Context);
+
   return (
     <>
       <input
