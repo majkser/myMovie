@@ -14,13 +14,15 @@ export default function Input() {
 
   return (
     <>
-      <input
-        className="w-3/4 mx-auto block p-4 my-8 rounded-xl placeholder-gray-400"
-        value={search}
-        onChange={handleSearch}
-        type="text"
-        placeholder="Search for a movie"
-      />
+      <div className="flex justify-center pt-20 pb-5">
+        <input
+          className="w-3/4 max-w-xl px-4 py-2 rounded-full shadow-sm border border-gray-700 focus:ring-2 focus:ring-indigo-500 focus:outline-none text-gray-300 placeholder-gray-500"
+          value={search}
+          onChange={handleSearch}
+          type="text"
+          placeholder="Search for a movie"
+        />
+      </div>
     </>
   );
 }

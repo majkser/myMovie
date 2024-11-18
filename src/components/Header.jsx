@@ -1,11 +1,10 @@
 export default function Header() {
-  const linkStyle =
-    "text-white text-xl py-3 px-4 rounded-xl transition-colors duration-300 hover:bg-[#242440]";
+  const linkStyle = "text-xl mx-4 text-gray-300 hover:text-white transition";
 
   return (
     <>
       <header className="w-full fixed top-0 z-10">
-        <nav className="bg-[#1A1A2E] p-8 w-full">
+        <nav className="bg-gradient-to-r from-indigo-900 via-purple-900 to-black text-white flex justify-between items-center shadow-md p-8 w-full">
           <div className="mx-auto flex justify-between items-center w-full">
             <a href="/" className="text-white font-bold text-4xl">
               myMovie
@@ -35,9 +34,6 @@ export default function Header() {
           </div>
         </nav>
       </header>
-      <div className="mt-40">
-        {/* This div adds margin to the top of the content below the header */}
-      </div>
     </>
   );
 }

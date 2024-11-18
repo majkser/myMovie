@@ -8,8 +8,9 @@ export default function NewMain() {
 
   return (
     <>
-      {search.length > 2 ? <Main /> : <BaseFilms />}
-      <p></p>
+      <div className="bg-inherit h-screen">
+        {search.length > 2 ? <Main /> : <BaseFilms />}
+      </div>
     </>
   );
 }

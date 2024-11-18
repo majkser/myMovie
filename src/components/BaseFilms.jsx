@@ -15,16 +15,23 @@ export default function BaseFilms() {
       {loading ? (
         <img className="mx-auto my-12" src={loadingGif} alt="loading" />
       ) : (
-        <div className="grid grid-cols-4 gap-x-4 gap-y-20 my-20">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-y-16 gap-x-4 px-4 py-8">
           {newlyAddedFilms.map((film) => (
-            <div key={film.imdbID}>
-              <img
-                className="w-64 h-96 mx-auto"
-                src={film.Poster}
-                alt="film poster"
-              />
-              <h2 className="font-bold text-center">{film.Title}</h2>
-              <p className="text-center">{film.Year}</p>
+            <div
+              key={film.imdbID}
+              className="group relative overflow-hidden hover:scale-105 transition-transform duration-300"
+            >
+              <div>
+                <img
+                  className="h-full w-auto mx-auto aspect-[2/3]"
+                  src={film.Poster}
+                  alt="film poster"
+                />
+              </div>
+              <h2 className="text-lg text-center font-semibold text-white group-hover:text-indigo-400 transition">
+                {film.Title}
+              </h2>
+              <p className="text-center text-gray-400 text-sm">{film.Year}</p>
             </div>
           ))}
         </div>
