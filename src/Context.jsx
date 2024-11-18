@@ -49,36 +49,27 @@ export default function ContextProvider({ children }) {
   }
 
   async function fetchNewlyAddedFilms() {
-    const currentYear = new Date().getFullYear();
     let films = [];
-    let page = 1;
-    const randomKeywords = ["Action", "Drama", "Sci-Fi", "Comedy", "Thriller"];
-    const randomFilm =
-      randomKeywords[Math.floor(Math.random() * randomKeywords.length)];
-
-    //TODO: change to fetch random films from the bestFilms array
+    const randomFilms = bestFilms.sort(() => 0.5 - Math.random()).slice(0, 32);
 
     try {
       setLoading(true);
 
-      while (films.length < 30) {
-        const data = await fetchFilmData(
-          `${randomFilm}&y=${currentYear}&page=${page}`
-        );
+      for (const film of randomFilms) {
+        const data = await fetchFilmData(`&i=${film}`);
 
-        if (data.Search) {
-          films = [...films, ...data.Search];
-        } else {
-          break;
+        if (data && data.Response === "True") {
+          films.push(data);
         }
-        page++;
       }
 
-      setNewlyAddedFilms(films.slice(0, 30));
+      setNewlyAddedFilms(films.slice(0, 32));
     } catch (error) {
       setError({
         message: error.message || "An error occurred, please come back later",
       });
+    } finally {
+      setLoading(false);
     }
   }
 

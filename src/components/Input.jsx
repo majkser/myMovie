@@ -15,10 +15,11 @@ export default function Input() {
   return (
     <>
       <input
-        className="w-3/4 mx-auto block p-4 my-8 rounded-xl"
+        className="w-3/4 mx-auto block p-4 my-8 rounded-xl placeholder-gray-400"
         value={search}
         onChange={handleSearch}
         type="text"
+        placeholder="Search for a movie"
       />
     </>
   );

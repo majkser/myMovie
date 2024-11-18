@@ -4,10 +4,10 @@ export default function Header() {
 
   return (
     <>
-      <header className="w-full">
+      <header className="w-full fixed top-0 z-10">
         <nav className="bg-[#1A1A2E] p-8 w-full">
           <div className="mx-auto flex justify-between items-center w-full">
-            <a href="/" className="text-white font-bold text-4xl ho">
+            <a href="/" className="text-white font-bold text-4xl">
               myMovie
             </a>
             <ul className="flex">
@@ -35,6 +35,9 @@ export default function Header() {
           </div>
         </nav>
       </header>
+      <div className="mt-40">
+        {/* This div adds margin to the top of the content below the header */}
+      </div>
     </>
   );
 }
