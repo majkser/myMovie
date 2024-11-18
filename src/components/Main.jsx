@@ -6,13 +6,14 @@ import "slick-carousel/slick/slick-theme.css";
 import loadingGif from "../assets/loading.gif";
 import sliderSetting from "../utils/sliderSettings.js";
 import Error from "./Error.jsx";
+import { Link } from "react-router-dom";
 
 export default function Main() {
   const { movies, loading, error, debounceSearch, fetchData } =
     useContext(Context);
 
   useEffect(() => {
-    fetchData();
+    fetchData(debounceSearch);
   }, [debounceSearch]);
 
   if (error) {
@@ -33,13 +34,15 @@ export default function Main() {
               {movies.length > 0 &&
                 movies.map((movie) => (
                   <div key={movie.imdbID} className="">
-                    <img
-                      className="w-64 h-96 mx-auto"
-                      src={movie.Poster}
-                      alt="movie poster"
-                    />
-                    <h2 className="font-bold text-center">{movie.Title}</h2>
-                    <p className="text-center">{movie.Year}</p>
+                    <Link to={`/movie/${movie.imdbID}`}>
+                      <img
+                        className="w-64 h-96 mx-auto"
+                        src={movie.Poster}
+                        alt="movie poster"
+                      />
+                      <h2 className="font-bold text-center">{movie.Title}</h2>
+                      <p className="text-center">{movie.Year}</p>
+                    </Link>
                   </div>
                 ))}
             </Slider>

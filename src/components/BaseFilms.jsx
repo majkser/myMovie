@@ -1,6 +1,7 @@
 import { Context } from "../Context";
 import { useContext, useEffect } from "react";
 import loadingGif from "../assets/loading.gif";
+import { Link } from "react-router-dom";
 
 export default function BaseFilms() {
   const { fetchNewlyAddedFilms, newlyAddedFilms, loading } =
@@ -22,17 +23,21 @@ export default function BaseFilms() {
                 key={film.imdbID}
                 className="group relative overflow-hidden hover:scale-105 transition-transform duration-300"
               >
-                <div>
-                  <img
-                    className="h-full w-auto mx-auto aspect-[2/3]"
-                    src={film.Poster}
-                    alt="film poster"
-                  />
-                </div>
-                <h2 className="text-lg text-center font-semibold text-white group-hover:text-indigo-400 transition">
-                  {film.Title}
-                </h2>
-                <p className="text-center text-gray-400 text-sm">{film.Year}</p>
+                <Link to={`/movie/${film.imdbID}`}>
+                  <div>
+                    <img
+                      className="h-full w-auto mx-auto aspect-[2/3]"
+                      src={film.Poster}
+                      alt="film poster"
+                    />
+                  </div>
+                  <h2 className="text-lg text-center font-semibold text-white group-hover:text-indigo-400 transition">
+                    {film.Title}
+                  </h2>
+                  <p className="text-center text-gray-400 text-sm">
+                    {film.Year}
+                  </p>
+                </Link>
               </div>
             ))}
           </div>

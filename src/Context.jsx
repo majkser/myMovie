@@ -9,9 +9,11 @@ export const Context = createContext({
   error: null,
   debounceSearch: "",
   newlyAddedFilms: [],
+  movieDetails: null,
   fetchData: () => {},
   handleSearch: () => {},
   fetchNewlyAddedFilms: () => {},
+  fetchMovieDetails: () => {},
 });
 
 export default function ContextProvider({ children }) {
@@ -21,18 +23,19 @@ export default function ContextProvider({ children }) {
   const [error, setError] = useState(null);
   const [debounceSearch, setDebounceSearch] = useState(search);
   const [newlyAddedFilms, setNewlyAddedFilms] = useState([]);
+  const [movieDetails, setMovieDetails] = useState(null);
 
   function handleSearch(event) {
     setSearch(event.target.value);
   }
 
-  async function fetchData() {
+  async function fetchData(debounceSearch) {
     if (debounceSearch.length <= 2) return;
 
     try {
       setLoading(true);
 
-      const data = await fetchFilmData(debounceSearch);
+      const data = await fetchFilmData(`&s=${debounceSearch}`);
 
       if (data.Search) {
         setMovies(data.Search);
@@ -73,6 +76,26 @@ export default function ContextProvider({ children }) {
     }
   }
 
+  async function fetchMovieDetails(id) {
+    try {
+      setLoading(true);
+
+      const data = await fetchFilmData(`&i=${id}`);
+
+      if (data && data.Response === "True") {
+        setMovieDetails(data);
+      } else {
+        setMovieDetails(null);
+      }
+    } catch (error) {
+      setError({
+        message: error.message || "An error occurred, please come back later",
+      });
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <Context.Provider
       value={{
@@ -82,6 +105,7 @@ export default function ContextProvider({ children }) {
         error,
         debounceSearch,
         newlyAddedFilms,
+        movieDetails,
         handleSearch,
         setMovies,
         setSearch,
@@ -90,6 +114,7 @@ export default function ContextProvider({ children }) {
         setDebounceSearch,
         fetchData,
         fetchNewlyAddedFilms,
+        fetchMovieDetails,
       }}
     >
       {children}
