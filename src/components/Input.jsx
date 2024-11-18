@@ -1,8 +1,16 @@
-import { useContext } from "react";
-import { Context } from "./Context";
+import { useContext, useEffect } from "react";
+import { Context } from "../Context";
 
 export default function Input() {
-  const { search, handleSearch } = useContext(Context);
+  const { search, setDebounceSearch, handleSearch } = useContext(Context);
+
+  useEffect(() => {
+    const timeoutHandler = setTimeout(() => {
+      setDebounceSearch(search);
+    }, 500);
+
+    return () => clearTimeout(timeoutHandler);
+  }, [search]);
 
   return (
     <>
