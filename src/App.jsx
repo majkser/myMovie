@@ -9,7 +9,7 @@ function App() {
     <>
       <ContextProvider>
         <Header />
-        <main className="mt-20 bg-gradient-to-b from-gray-900 via-black to-gray-800 text-white">
+        <main className="mt-20 bg-[#1E1E1E] text-white">
           <Input />
           <NewMain />
         </main>

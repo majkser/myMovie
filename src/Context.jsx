@@ -50,7 +50,7 @@ export default function ContextProvider({ children }) {
 
   async function fetchNewlyAddedFilms() {
     let films = [];
-    const randomFilms = bestFilms.sort(() => 0.5 - Math.random()).slice(0, 32);
+    const randomFilms = bestFilms.sort(() => 0.5 - Math.random()).slice(0, 36);
 
     try {
       setLoading(true);
@@ -63,7 +63,7 @@ export default function ContextProvider({ children }) {
         }
       }
 
-      setNewlyAddedFilms(films.slice(0, 32));
+      setNewlyAddedFilms(films.slice(0, 36));
     } catch (error) {
       setError({
         message: error.message || "An error occurred, please come back later",

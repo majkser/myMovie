@@ -4,7 +4,7 @@ export default function Header() {
   return (
     <>
       <header className="w-full fixed top-0 z-10">
-        <nav className="bg-gradient-to-r from-indigo-900 via-purple-900 to-black text-white flex justify-between items-center shadow-md p-8 w-full">
+        <nav className="bg-[#121212] text-white flex justify-between items-center shadow-md p-8 w-full">
           <div className="mx-auto flex justify-between items-center w-full">
             <a href="/" className="text-white font-bold text-4xl">
               myMovie
