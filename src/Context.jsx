@@ -58,13 +58,13 @@ export default function ContextProvider({ children }) {
     try {
       setLoading(true);
 
-      for (const film of randomFilms) {
-        const data = await fetchFilmData(`&i=${film}`);
+      const promises = randomFilms.map((film) => {
+        return fetchFilmData(`&i=${film}`);
+      });
 
-        if (data && data.Response === "True") {
-          films.push(data);
-        }
-      }
+      const data = await Promise.all(promises);
+
+      films = data.filter((data) => data && data.Response === "True");
 
       setNewlyAddedFilms(films.slice(0, 36));
     } catch (error) {

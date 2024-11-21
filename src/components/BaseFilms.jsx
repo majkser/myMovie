@@ -9,7 +9,7 @@ export default function BaseFilms() {
 
   useEffect(() => {
     fetchNewlyAddedFilms();
-  }, []); // Ensure this effect runs only once
+  }, []);
 
   return (
     <>
