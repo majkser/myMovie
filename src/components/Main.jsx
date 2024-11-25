@@ -33,15 +33,24 @@ export default function Main() {
             >
               {movies.length > 0 &&
                 movies.map((movie) => (
-                  <div key={movie.imdbID} className="">
+                  <div
+                    key={movie.imdbID}
+                    className="group relative overflow-hidden hover:scale-105 transition-transform duration-300 z-10"
+                  >
                     <Link to={`/movie/${movie.imdbID}`}>
-                      <img
-                        className="w-64 h-96 mx-auto"
-                        src={movie.Poster}
-                        alt="movie poster"
-                      />
-                      <h2 className="font-bold text-center">{movie.Title}</h2>
-                      <p className="text-center">{movie.Year}</p>
+                      <div>
+                        <img
+                          className="w-64 h-96 mx-auto"
+                          src={movie.Poster}
+                          alt="movie poster"
+                        />
+                        <h2 className="text-lg text-center font-semibold text-white group-hover:text-indigo-400 transition">
+                          {movie.Title}
+                        </h2>
+                        <p className="text-center text-gray-400 text-sm">
+                          {movie.Year}
+                        </p>
+                      </div>
                     </Link>
                   </div>
                 ))}
