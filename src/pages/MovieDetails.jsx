@@ -3,11 +3,13 @@ import { Context } from "../Context.jsx";
 import { useParams } from "react-router-dom";
 import loadingGif from "../assets/loading.gif";
 import Rating from "@mui/material/Rating";
+import starIcon from "../assets/star.svg";
 
 export default function MovieDetails() {
   const { fetchMovieDetails, movieDetails, loading } = useContext(Context);
   const [movieTrailerId, setMovieTrailerId] = useState("");
   const { id } = useParams();
+  const [ratingButtonClick, setRatingButtonClick] = useState(false);
   const yt_api_key = import.meta.env.VITE_YT_API_KEY;
 
   useEffect(() => {
@@ -54,7 +56,7 @@ export default function MovieDetails() {
         }
       }
     });
-    console.log(rate);
+
     rate = parseFloat(rate);
     switch (true) {
       case rate < 1.5:
@@ -90,61 +92,95 @@ export default function MovieDetails() {
     }
   }
 
-  //TODO update styles for movie details and add iframe for trailer
+  function handleRatingButtonClick() {
+    setRatingButtonClick((prev) => !prev);
+  }
 
   return (
-    <div className="bg-[#1E1E1E] h-screen">
-      <div className="container mx-auto flex justify-center items-center h-full">
-        <div className="w-[75%] bg-[#2C2C2C] rounded-lg p-8">
-          {movieDetails ? (
-            <>
-              <div className="flex justify-between">
-                <div>
-                  <h1 className="text-2xl font-bold text-white">
-                    {movieDetails.Title}
-                  </h1>
-                  <p className="text-l text-white mb-6">{movieDetails.Year}</p>
-                </div>
-                <div className="">
-                  <p className="my-auto text-xl text-white text-center">
-                    {rate}
-                  </p>
-                  <Rating
-                    className="my-auto"
-                    name="read-only"
-                    value={starsValue}
-                    precision={0.5}
-                    readOnly
-                  />
-                </div>
+    <>
+      <div className="bg-[#1E1E1E] h-screen">
+        {ratingButtonClick && (
+          <div
+            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+            onMouseUp={handleRatingButtonClick}
+          >
+            <div
+              className="bg-white w-[40%] h-[30%] p-8 rounded-lg flex"
+              onMouseUp={(e) => e.stopPropagation()}
+            >
+              <h1 className="text-black text-center">Rate:</h1>
+              <div className="flex justify-center">
+                <Rating
+                  className="scale-150"
+                  name="half-rating"
+                  defaultValue={2.5}
+                  precision={0.5}
+                />
               </div>
-              <div className="flex justify-between">
-                <div>
-                  <img
-                    className=""
-                    src={movieDetails.Poster}
-                    alt="movie poster"
-                  />{" "}
+            </div>
+          </div>
+        )}
+        <div className="container mx-auto flex justify-center items-center h-full">
+          <div className="w-[75%] bg-[#2C2C2C] rounded-lg p-8">
+            {movieDetails ? (
+              <>
+                <div className="flex justify-between">
+                  <div>
+                    <h1 className="text-2xl font-bold text-white">
+                      {movieDetails.Title}
+                    </h1>
+                    <p className="text-l text-white mb-6">
+                      {movieDetails.Year}
+                    </p>
+                  </div>
+                  <button onClick={handleRatingButtonClick}>
+                    <div className="flex h-3/4 m-auto hover:bg-[#1E1E1E] px-4 py-0 rounded-2xl transition duration-300">
+                      <h3 className="my-auto text-xl text-white text-center mr-1">
+                        RATE
+                      </h3>
+                      <img src={starIcon} alt="starIcon" className="m-auto" />
+                    </div>
+                  </button>
+                  <div className="">
+                    <p className="my-auto text-xl text-white text-center">
+                      {rate}
+                    </p>
+                    <Rating
+                      className="my-auto"
+                      name="read-only"
+                      value={starsValue}
+                      precision={0.5}
+                      readOnly
+                    />
+                  </div>
                 </div>
-
-                <iframe
-                  className="my-auto rounded-xl aspect-[16/9]"
-                  src={`https://www.youtube.com/embed/${movieTrailerId}`}
-                  frameBorder="0"
-                  height={350}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-              </div>
-              <p className="text-gray-300 text-center mt-8">
-                {movieDetails.Plot}
-              </p>
-            </>
-          ) : (
-            <p className="text-white text-center">Movie details not found.</p>
-          )}
-        </div>
-      </div>
-    </div>
+                <div className="flex justify-between">
+                  <div>
+                    <img
+                      className=""
+                      src={movieDetails.Poster}
+                      alt="movie poster"
+                    />{" "}
+                  </div>
+                  <iframe
+                    className="my-auto rounded-xl aspect-[16/9]"
+                    src={`https://www.youtube.com/embed/${movieTrailerId}`}
+                    frameBorder="0"
+                    height={350}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+                <p className="text-gray-300 text-center mt-8">
+                  {movieDetails.Plot}
+                </p>{" "}
+              </>
+            ) : (
+              <p className="text-white text-center">Movie details not found.</p>
+            )}{" "}
+          </div>
+        </div>{" "}
+      </div>{" "}
+    </>
   );
 }
