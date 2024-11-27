@@ -8,8 +8,8 @@ import starIcon from "../assets/star.svg";
 export default function MovieDetails() {
   const { fetchMovieDetails, movieDetails, loading } = useContext(Context);
   const [movieTrailerId, setMovieTrailerId] = useState("");
-  const { id } = useParams();
   const [ratingButtonClick, setRatingButtonClick] = useState(false);
+  const { id } = useParams();
   const yt_api_key = import.meta.env.VITE_YT_API_KEY;
 
   useEffect(() => {
@@ -21,6 +21,11 @@ export default function MovieDetails() {
       fetchTrailer(movieDetails.Title);
     }
   }, [movieDetails]);
+
+  const [userRating, setUserRating] = useState(
+    movieDetails &&
+      (localStorage.getItem(`userRating: ${movieDetails.Title}`) || 0)
+  );
 
   async function fetchTrailer(title) {
     try {
@@ -96,6 +101,12 @@ export default function MovieDetails() {
     setRatingButtonClick((prev) => !prev);
   }
 
+  function handleUserRating(event, newValue) {
+    setUserRating(newValue);
+    localStorage.setItem(`userRating: ${movieDetails.Title}`, newValue);
+    handleRatingButtonClick();
+  }
+
   return (
     <>
       <div className="bg-[#1E1E1E] h-screen">
@@ -115,7 +126,8 @@ export default function MovieDetails() {
                 <Rating
                   className="scale-[250%]"
                   name="half-rating"
-                  defaultValue={0}
+                  value={userRating}
+                  onChange={handleUserRating}
                   precision={0.5}
                 />
               </div>
