@@ -105,22 +105,28 @@ export default function MovieDetails() {
             onMouseUp={handleRatingButtonClick}
           >
             <div
-              className="bg-white w-[40%] h-[30%] p-8 rounded-lg flex"
+              className="bg-[#2C2C2C] w-[40%] h-[30%] p-8 rounded-lg flex flex-col justify-evenly"
               onMouseUp={(e) => e.stopPropagation()}
             >
-              <h1 className="text-black text-center">Rate:</h1>
+              <h2 className="text-white text-center text-2xl mt-[-30px]">
+                RATE:
+              </h2>
               <div className="flex justify-center">
                 <Rating
-                  className="scale-150"
+                  className="scale-[250%]"
                   name="half-rating"
-                  defaultValue={2.5}
+                  defaultValue={0}
                   precision={0.5}
                 />
               </div>
             </div>
           </div>
         )}
-        <div className="container mx-auto flex justify-center items-center h-full">
+        <div
+          className={`container mx-auto flex justify-center items-center h-full ${
+            ratingButtonClick && "blur-sm"
+          }`}
+        >
           <div className="w-[75%] bg-[#2C2C2C] rounded-lg p-8">
             {movieDetails ? (
               <>
