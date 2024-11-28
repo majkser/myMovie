@@ -8,6 +8,13 @@ import sliderSetting from "../utils/sliderSettings.js";
 import Error from "./Error.jsx";
 import { Link } from "react-router-dom";
 
+import { Navigation, Scrollbar, A11y, EffectCards } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+
 export default function Main() {
   const { movies, loading, error, debounceSearch, fetchData } =
     useContext(Context);
@@ -27,16 +34,20 @@ export default function Main() {
           <img className="mx-auto my-12" src={loadingGif} alt="loading" />
         ) : debounceSearch.length > 2 ? (
           movies.length > 0 ? (
-            <Slider
+            <Swiper
               className="w-[85%] mx-auto my-12 bg-inherit"
-              {...sliderSetting}
+              modules={[Navigation, Scrollbar, EffectCards, A11y]}
+              navigation
+              spaceBetween={10}
+              slidesPerView={5}
+              pagination={{ clickable: true }}
+              scrollbar={{ draggable: true }}
+              onSwiper={(swiper) => console.log(swiper)}
+              onSlideChange={() => console.log("slide change")}
             >
-              {movies.length > 0 &&
-                movies.map((movie) => (
-                  <div
-                    key={movie.imdbID}
-                    className="group relative overflow-hidden hover:scale-105 transition-transform duration-300 z-10"
-                  >
+              {movies.map((movie) => (
+                <SwiperSlide key={movie.imdbID}>
+                  <div className="group relative overflow-hidden hover:scale-105 transition-transform duration-300 z-10">
                     <Link to={`/movie/${movie.imdbID}`}>
                       <div>
                         <img
@@ -53,8 +64,9 @@ export default function Main() {
                       </div>
                     </Link>
                   </div>
-                ))}
-            </Slider>
+                </SwiperSlide>
+              ))}
+            </Swiper>
           ) : (
             <p className="text-white text-center text-2xl">No movies found</p>
           )
