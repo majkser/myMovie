@@ -23,8 +23,7 @@ export default function MovieDetails() {
   }, [movieDetails]);
 
   const [userRating, setUserRating] = useState(
-    movieDetails &&
-      (localStorage.getItem(`userRating: ${movieDetails.Title}`) || 0)
+    movieDetails && (localStorage.getItem(`userRating:${movieDetails.Id}`) || 0)
   );
 
   async function fetchTrailer(title) {
@@ -103,7 +102,7 @@ export default function MovieDetails() {
 
   function handleUserRating(event, newValue) {
     setUserRating(newValue);
-    localStorage.setItem(`userRating: ${movieDetails.Title}`, newValue);
+    localStorage.setItem(`userRating:${movieDetails.Id}`, newValue);
     handleRatingButtonClick();
   }
 
