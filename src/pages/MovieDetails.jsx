@@ -125,96 +125,92 @@ export default function MovieDetails() {
 
   return (
     <>
-      <div className="bg-[#1E1E1E] h-screen">
-        {ratingButtonClick && (
+      {ratingButtonClick && (
+        <div
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+          onMouseUp={handleRatingButtonClick}
+        >
           <div
-            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
-            onMouseUp={handleRatingButtonClick}
+            className="bg-[#2C2C2C] w-[40%] h-[30%] p-8 rounded-lg flex flex-col justify-evenly"
+            onMouseUp={(e) => e.stopPropagation()}
           >
-            <div
-              className="bg-[#2C2C2C] w-[40%] h-[30%] p-8 rounded-lg flex flex-col justify-evenly"
-              onMouseUp={(e) => e.stopPropagation()}
-            >
-              <h2 className="text-white text-center text-2xl mt-[-30px]">
-                RATE:
-              </h2>
-              <div className="flex justify-center">
-                <Rating
-                  className="scale-[250%]"
-                  name="half-rating"
-                  value={userRating}
-                  onChange={handleUserRating}
-                  precision={0.5}
-                />
-              </div>
+            <h2 className="text-white text-center text-2xl mt-[-30px]">
+              RATE:
+            </h2>
+            <div className="flex justify-center">
+              <Rating
+                className="scale-[250%]"
+                name="half-rating"
+                value={userRating}
+                onChange={handleUserRating}
+                precision={0.5}
+              />
             </div>
           </div>
-        )}
-        <div
-          className={`container mx-auto flex justify-center items-center h-full ${
-            ratingButtonClick && "blur-sm"
-          }`}
-        >
-          <div className="w-[75%] bg-[#2C2C2C] rounded-lg p-8">
-            {movieDetails ? (
-              <>
-                <div className="flex justify-between">
-                  <div>
-                    <h1 className="text-2xl font-bold text-white">
-                      {movieDetails.Title}
-                    </h1>
-                    <p className="text-l text-white mb-6">
-                      {movieDetails.Year}
-                    </p>
-                  </div>
-                  <button onClick={handleRatingButtonClick}>
-                    <div className="flex h-3/4 m-auto hover:bg-[#1E1E1E] px-4 py-0 rounded-2xl transition duration-300">
-                      <h3 className="my-auto text-xl text-white text-center mr-1">
-                        RATE
-                      </h3>
-                      <img src={starIcon} alt="starIcon" className="m-auto" />
-                    </div>
-                  </button>
-                  <div className="">
-                    <p className="my-auto text-xl text-white text-center">
-                      {rate}
-                    </p>
-                    <Rating
-                      className="my-auto"
-                      name="read-only"
-                      value={starsValue}
-                      precision={0.5}
-                      readOnly
-                    />
-                  </div>
+        </div>
+      )}
+      <div
+        className={`container mx-auto flex justify-center items-center h-full ${
+          ratingButtonClick && "blur-sm"
+        }`}
+      >
+        <div className="w-[75%] bg-[#2C2C2C] rounded-lg p-8">
+          {movieDetails ? (
+            <>
+              <div className="flex justify-between">
+                <div>
+                  <h1 className="text-2xl font-bold text-white">
+                    {movieDetails.Title}
+                  </h1>
+                  <p className="text-l text-white mb-6">{movieDetails.Year}</p>
                 </div>
-                <div className="flex justify-between">
-                  <div>
-                    <img
-                      className=""
-                      src={movieDetails.Poster}
-                      alt="movie poster"
-                    />{" "}
+                <button onClick={handleRatingButtonClick}>
+                  <div className="flex h-3/4 m-auto hover:bg-[#1E1E1E] px-4 py-0 rounded-2xl transition duration-300">
+                    <h3 className="my-auto text-xl text-white text-center mr-1">
+                      RATE
+                    </h3>
+                    <img src={starIcon} alt="starIcon" className="m-auto" />
                   </div>
-                  <iframe
-                    className="my-auto rounded-xl aspect-[16/9]"
-                    src={`https://www.youtube.com/embed/${movieTrailerId}`}
-                    frameBorder="0"
-                    height={350}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
+                </button>
+                <div className="">
+                  <p className="my-auto text-xl text-white text-center">
+                    {rate}
+                  </p>
+                  <Rating
+                    className="my-auto"
+                    name="read-only"
+                    value={starsValue}
+                    precision={0.5}
+                    readOnly
+                  />
                 </div>
-                <p className="text-gray-300 text-center mt-8">
-                  {movieDetails.Plot}
-                </p>{" "}
-              </>
-            ) : (
-              <p className="text-white text-center">Movie details not found.</p>
-            )}{" "}
-          </div>
-        </div>{" "}
-      </div>{" "}
+              </div>
+              <div className="flex justify-between">
+                <div>
+                  <img
+                    className=""
+                    src={movieDetails.Poster}
+                    alt="movie poster"
+                  />
+                </div>
+                <iframe
+                  className="my-auto rounded-xl aspect-[16/9]"
+                  src={`https://www.youtube.com/embed/${movieTrailerId}`}
+                  frameBorder="0"
+                  height={350}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+              <p className="text-gray-300 text-center mt-8">
+                {movieDetails.Plot}
+              </p>
+            </>
+          ) : (
+            <p className="text-white text-center">Movie details not found.</p>
+          )}
+        </div>
+      </div>
     </>
   );
 }

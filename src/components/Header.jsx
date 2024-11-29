@@ -1,3 +1,5 @@
+import Input from "./Input";
+
 export default function Header() {
   const linkStyle = "text-xl mx-4 text-gray-300 hover:text-white transition";
 
@@ -9,28 +11,7 @@ export default function Header() {
             <a href="/" className="text-white font-bold text-4xl">
               myMovie
             </a>
-            <ul className="flex">
-              <li>
-                <a href="/" className={linkStyle}>
-                  Home
-                </a>
-              </li>
-              <li>
-                <a href="/" className={linkStyle}>
-                  About
-                </a>
-              </li>
-              <li>
-                <a href="/" className={linkStyle}>
-                  Services
-                </a>
-              </li>
-              <li>
-                <a href="/" className={linkStyle}>
-                  Contact
-                </a>
-              </li>
-            </ul>
+            <Input />
           </div>
         </nav>
       </header>
