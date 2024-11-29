@@ -1,10 +1,8 @@
 import { useContext, useEffect } from "react";
 import { Context } from "../Context.jsx";
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import loadingGif from "../assets/loading.gif";
-import sliderSetting from "../utils/sliderSettings.js";
 import Error from "./Error.jsx";
 import { Link } from "react-router-dom";
 

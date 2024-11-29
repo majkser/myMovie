@@ -1,12 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../Context.jsx";
 import { useParams } from "react-router-dom";
+import Main from "../components/Main.jsx";
 import loadingGif from "../assets/loading.gif";
 import Rating from "@mui/material/Rating";
 import starIcon from "../assets/star.svg";
 
 export default function MovieDetails() {
-  const { fetchMovieDetails, movieDetails, loading } = useContext(Context);
+  const { fetchMovieDetails, movieDetails, loading, search } =
+    useContext(Context);
   const [movieTrailerId, setMovieTrailerId] = useState("");
   const [ratingButtonClick, setRatingButtonClick] = useState(false);
   const [userRating, setUserRating] = useState(0);

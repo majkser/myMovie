@@ -10,6 +10,7 @@ export const Context = createContext({
   debounceSearch: "",
   newlyAddedFilms: [],
   movieDetails: null,
+  setSearch: () => {},
   fetchData: () => {},
   handleSearch: () => {},
   fetchNewlyAddedFilms: () => {},
@@ -34,6 +35,7 @@ export default function ContextProvider({ children }) {
 
     try {
       setLoading(true);
+      setError(null);
 
       const data = await fetchFilmData(`&s=${debounceSearch}`);
 
@@ -46,9 +48,9 @@ export default function ContextProvider({ children }) {
       setError({
         message: error.message || "An error occurred, please come back later",
       });
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   }
 
   async function fetchNewlyAddedFilms() {
