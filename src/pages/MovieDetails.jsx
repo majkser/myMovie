@@ -9,6 +9,7 @@ export default function MovieDetails() {
   const { fetchMovieDetails, movieDetails, loading } = useContext(Context);
   const [movieTrailerId, setMovieTrailerId] = useState("");
   const [ratingButtonClick, setRatingButtonClick] = useState(false);
+  const [userRating, setUserRating] = useState(0);
   const { id } = useParams();
   const yt_api_key = import.meta.env.VITE_YT_API_KEY;
 
@@ -19,12 +20,29 @@ export default function MovieDetails() {
   useEffect(() => {
     if (movieDetails) {
       fetchTrailer(movieDetails.Title);
+      const storedRating = localStorage.getItem(
+        `userRating:${movieDetails.imdbID}`
+      );
+      if (storedRating != null) {
+        setUserRating(parseFloat(storedRating));
+      }
     }
   }, [movieDetails]);
 
-  const [userRating, setUserRating] = useState(
-    movieDetails && (localStorage.getItem(`userRating:${movieDetails.Id}`) || 0)
-  );
+  useEffect(() => {
+    if (movieDetails) {
+      localStorage.setItem(
+        `userRating:${movieDetails.imdbID}`,
+        parseFloat(userRating)
+      );
+    }
+  }, [userRating, movieDetails]);
+
+  useEffect(() => {
+    if (movieDetails) {
+      fetchTrailer(movieDetails.Title);
+    }
+  }, [movieDetails]);
 
   async function fetchTrailer(title) {
     try {
@@ -102,7 +120,6 @@ export default function MovieDetails() {
 
   function handleUserRating(event, newValue) {
     setUserRating(newValue);
-    localStorage.setItem(`userRating:${movieDetails.Id}`, newValue);
     handleRatingButtonClick();
   }
 
