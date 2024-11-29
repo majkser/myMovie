@@ -14,9 +14,10 @@ export default function BaseFilms() {
   return (
     <>
       <div className="bg-[#1E1E1E] ">
-        {loading ? (
+        {loading && (
           <img className="mx-auto my-12" src={loadingGif} alt="loading" />
-        ) : (
+        )}
+        {!loading && (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-y-16 gap-x-4 px-4 py-8">
             {newlyAddedFilms.map((film) => (
               <div

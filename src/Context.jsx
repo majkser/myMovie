@@ -66,7 +66,7 @@ export default function ContextProvider({ children }) {
 
       films = data.filter((data) => data && data.Response === "True");
 
-      setNewlyAddedFilms(films.slice(0, 36));
+      setNewlyAddedFilms(films);
     } catch (error) {
       setError({
         message: error.message || "An error occurred, please come back later",
