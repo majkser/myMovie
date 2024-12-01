@@ -6,12 +6,11 @@ import loadingGif from "../assets/loading.gif";
 import Error from "./Error.jsx";
 import { Link } from "react-router-dom";
 
-import { Navigation, Scrollbar, A11y, EffectCards } from "swiper/modules";
+import { Navigation, Autoplay, A11y } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "swiper/css/scrollbar";
 
 export default function Main() {
   const { movies, loading, error, debounceSearch, fetchData } =
@@ -24,9 +23,10 @@ export default function Main() {
   if (error) {
     return <Error message={error.message} />;
   }
+
   const shouldRenderMovies = movies.length > 0 && !loading;
   const noMoviesFound =
-    debounceSearch.length < 2 && movies.length == 0 && !loading;
+    debounceSearch.length < 2 && movies.length === 0 && !loading;
   const initialView = debounceSearch.length < 2;
 
   return (
@@ -37,34 +37,40 @@ export default function Main() {
         )}
         {shouldRenderMovies && (
           <Swiper
-            className="w-[85%] mx-auto my-12 bg-inherit"
-            modules={[Navigation, EffectCards, A11y]}
+            className="w-[90%] mx-auto my-12 bg-inherit"
+            modules={[Navigation, Autoplay, A11y]}
             navigation
-            spaceBetween={10}
-            slidesPerView={5}
-            pagination={{ clickable: true }}
-            scrollbar={{ draggable: true }}
-            onSwiper={(swiper) => console.log(swiper)}
-            onSlideChange={() => console.log("slide change")}
+            autoplay={{ delay: 3000 }}
+            spaceBetween={20}
+            slidesPerView="auto"
+            loop={true}
+            breakpoints={{
+              640: { slidesPerView: 2, spaceBetween: 20 },
+              768: { slidesPerView: 3, spaceBetween: 30 },
+              1024: { slidesPerView: 5, spaceBetween: 40 },
+            }}
           >
             {movies.map((movie) => (
               <SwiperSlide key={movie.imdbID}>
-                <div className="group relative overflow-hidden hover:scale-105 transition-transform duration-300 z-10">
-                  <Link to={`/movie/${movie.imdbID}`}>
-                    <div>
-                      <img
-                        className="w-64 h-96 mx-auto"
-                        src={movie.Poster}
-                        alt="movie poster"
-                      />
-                      <h2 className="text-lg text-center font-semibold text-white group-hover:text-indigo-400 transition">
-                        {movie.Title}
-                      </h2>
-                      <p className="text-center text-gray-400 text-sm">
-                        {movie.Year}
-                      </p>
-                    </div>
-                  </Link>
+                <div className="h-96 rounded-xl overflow-hidden">
+                  <div className="group relative overflow-hidden rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
+                    <Link to={`/movie/${movie.imdbID}`}>
+                      <div>
+                        <img
+                          className="w-full h-96 object-cover"
+                          src={movie.Poster}
+                          alt="movie poster"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70 group-hover:opacity-50 transition-opacity"></div>
+                        <div className="absolute bottom-4 left-4 text-white">
+                          <h2 className="text-lg font-semibold group-hover:text-indigo-400 transition">
+                            {movie.Title}
+                          </h2>
+                          <p className="text-gray-300 text-sm">{movie.Year}</p>
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
                 </div>
               </SwiperSlide>
             ))}
@@ -73,7 +79,6 @@ export default function Main() {
         {noMoviesFound && (
           <p className="text-white text-center text-2xl">No movies found</p>
         )}
-
         {initialView && (
           <p className="text-white text-center text-2xl">Search for a movie</p>
         )}
