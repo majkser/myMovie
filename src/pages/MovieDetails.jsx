@@ -190,7 +190,7 @@ export default function MovieDetails() {
               <div className="flex justify-between">
                 <div>
                   <img
-                    className=""
+                    className="shadow-xl rounded-xl"
                     src={movieDetails.Poster}
                     alt="movie poster"
                   />
