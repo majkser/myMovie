@@ -1,5 +1,5 @@
 import "./App.css";
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ContextProvider from "./Context.jsx";
 import Header from "./components/header.jsx";
 import NewMain from "./components/NewMain.jsx";
