@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../Context.jsx";
 import { useParams } from "react-router-dom";
-import Main from "../components/Main.jsx";
 import loadingGif from "../assets/loading.gif";
 import Rating from "@mui/material/Rating";
 import starIcon from "../assets/star.svg";
+const yt_api_key = import.meta.env.VITE_YT_API_KEY;
 
 export default function MovieDetails() {
   const { fetchMovieDetails, movieDetails, loading, search } =
@@ -13,7 +13,6 @@ export default function MovieDetails() {
   const [ratingButtonClick, setRatingButtonClick] = useState(false);
   const [userRating, setUserRating] = useState(0);
   const { id } = useParams();
-  const yt_api_key = import.meta.env.VITE_YT_API_KEY;
 
   useEffect(() => {
     fetchMovieDetails(id);
