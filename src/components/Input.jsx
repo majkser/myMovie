@@ -17,7 +17,7 @@ export default function Input() {
 
   function handleKeyDown(event) {
     if (event.key === "Enter") {
-      navigate("/");
+      navigate("/myMovie/");
       setSearch(search);
       console.log("searching for", search);
     }
