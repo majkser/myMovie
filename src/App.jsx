@@ -14,7 +14,7 @@ function App() {
           <main className="mt-40 bg-[#1E1E1E] text-white">
             <Routes>
               <Route
-                path="/"
+                path="/myMovie"
                 element={
                   <>
                     <NewMain />
