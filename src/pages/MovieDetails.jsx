@@ -133,7 +133,7 @@ export default function MovieDetails() {
           onMouseUp={handleRatingButtonClick}
         >
           <div
-            className="bg-[#2C2C2C] w-[40%] h-[30%] p-8 rounded-lg flex flex-col justify-evenly"
+            className="bg-[#2C2C2C] w-[90%] sm:w-[75%] md:w-[50%] lg:w-[40%] h-[30%] p-8 rounded-lg flex flex-col justify-evenly"
             onMouseUp={(e) => e.stopPropagation()}
           >
             <h2 className="text-white text-center text-2xl mt-[-30px]">
@@ -141,7 +141,7 @@ export default function MovieDetails() {
             </h2>
             <div className="flex justify-center">
               <Rating
-                className="scale-[250%]"
+                className="scale-[150%] sm:scale-[200%] md:scale-[250%]"
                 name="half-rating"
                 value={userRating}
                 onChange={handleUserRating}
@@ -156,47 +156,35 @@ export default function MovieDetails() {
           ratingButtonClick && "blur-sm"
         }`}
       >
-        <div className="w-[75%] bg-[#2C2C2C] rounded-lg p-8">
+        <div className="w-[90%] sm:w-[85%] md:w-[75%] lg:w-[65%] bg-[#2C2C2C] rounded-lg p-4 sm:p-8">
           {movieDetails ? (
             <>
-              <div className="flex justify-between">
-                <div>
+              <div className="flex flex-col sm:flex-row justify-between">
+                <div className="mb-4 sm:mb-0">
                   <h1 className="text-2xl font-bold text-white">
                     {movieDetails.Title}
                   </h1>
                   <p className="text-l text-white mb-6">{movieDetails.Year}</p>
                 </div>
                 <button onClick={handleRatingButtonClick}>
-                  <div className="flex h-3/4 m-auto hover:bg-[#1E1E1E] px-4 py-0 rounded-2xl transition duration-300">
+                  <div className="block sm:flex h-3/4 m-auto hover:bg-[#1E1E1E] px-4 py-0 rounded-2xl transition duration-300">
                     <h3 className="my-auto text-xl text-white text-center mr-1">
                       RATE
                     </h3>
                     <img src={starIcon} alt="starIcon" className="m-auto" />
                   </div>
                 </button>
-                <div className="">
-                  <p className="my-auto text-xl text-white text-center">
-                    {rate}
-                  </p>
-                  <Rating
-                    className="my-auto"
-                    name="read-only"
-                    value={starsValue}
-                    precision={0.5}
-                    readOnly
-                  />
-                </div>
               </div>
-              <div className="flex justify-between">
-                <div>
+              <div className="flex flex-col sm:flex-row justify-between">
+                <div className="mb-4 sm:mb-0">
                   <img
-                    className="shadow-xl rounded-xl"
+                    className="shadow-xl rounded-xl w-full sm:w-auto"
                     src={movieDetails.Poster}
                     alt="movie poster"
                   />
                 </div>
                 <iframe
-                  className="my-auto rounded-xl aspect-[16/9]"
+                  className="my-auto rounded-xl aspect-[16/9] w-full sm:w-auto"
                   src={`https://www.youtube.com/embed/${movieTrailerId}`}
                   frameBorder="0"
                   height={350}
