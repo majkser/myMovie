@@ -165,6 +165,16 @@ export default function MovieDetails() {
                   </h1>
                   <p className="text-l text-white mb-6">{movieDetails.Year}</p>
                 </div>
+                <div className="m-auto">
+                  <p className="text-center">{rate}/10</p>
+                  <Rating
+                    className="m-auto"
+                    name="half-rating-read"
+                    defaultValue={starsValue}
+                    precision={0.5}
+                    readOnly
+                  />
+                </div>
                 <button onClick={handleRatingButtonClick}>
                   <div className="block sm:flex h-3/4 m-auto hover:bg-[#1E1E1E] px-4 py-0 rounded-2xl transition duration-300">
                     <h3 className="my-auto text-xl text-white text-center mr-1">
